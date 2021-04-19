@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <title> Clasificador de videojuegos </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="../static/style.css">
+
+    <link id="favicon" rel="shortcut icon" href="../static/favicon.png">
+
+</head>
+
+<body>
+
+<div id="header_row">
+    <div id="header_container" class="row">
+        <div class="col-md-8">
+            <a href="https://www.digitalhouse.com/ar/landing/ar">
+                <img src="https://images.assets-landingi.com/b5DHbeo0ce7FBIWU/dh_logo.svg" id="header_logo">
+            </a>
+        </div>
+        <div class="col-md-4">
+            <h4 class="titulo">VIDEOGAMES CLASSIFIER</h4>
+        </div>
+    </div> 
+</div>
+
+<div id = "main_panel">
+<form action="{{ url_for('predict')}}" method="GET">
+    <div class="row">
+        <div class = "col-md-3">
+            <a href="https://dh-videogames-classifier.herokuapp.com/predict?game_name=Double Dragon 4">
+                <img class = "gameImage" src="../static/double_dragon_4.jpg">
+            </a>            
+        </div>
+        <div class="col-md-3">
+            <a href="https://dh-videogames-classifier.herokuapp.com/predict?game_name=LEGO Worlds">
+                <img class = "gameImage" src="../static/lego_worlds.jpg">
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="https://dh-videogames-classifier.herokuapp.com/predict?game_name=Nioh">
+                <img class = "gameImage" src="../static/nioh.jpeg">
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="https://dh-videogames-classifier.herokuapp.com/predict?game_name=Path of Exile">
+                <img class = "gameImage" src="../static/path_of_exile.jpg">
+            </a>
+        </div>
+    </div>
+</form>
+</div>
+    {% if showPredictions %}
+
+    <table class = "table">
+        <thead class="thead-light">
+            <tr>
+                <th class = "colGameName"> Game Name</th>
+                <th class = "colProba"> Everyone </th>
+                <th class = "colProba"> Everyone 10+</th>
+                <th class = "colProba"> Teen </th>
+                <th class = "colProba"> Mature </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {{ game_name }}
+                </td>
+                <td {% if prediction == 0 %} class = "bg-success" {% endif %} > 
+                    {{ e_proba }}
+                </td>
+                <td {% if prediction == 1 %} class = "bg-success" {% endif %} > 
+                    {{ et_proba }}
+                </td>
+                <td {% if prediction == 3 %} class = "bg-success" {% endif %} > 
+                    {{ t_proba }}
+                </td>
+                <td {% if prediction == 2 %} class = "bg-success" {% endif %} > 
+                    {{ m_proba }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+
+
+</body>
+
+</html>
